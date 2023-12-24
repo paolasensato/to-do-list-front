@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <Suspense>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
       </Routes>
     </Suspense>
   );
