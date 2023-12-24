@@ -12,13 +12,16 @@ import axios, { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
 import Feedback, { feedbackProps } from "../../components/Feedback";
 import useUserStore from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formValues, setFormValues] = useState({});
   const [feedback, setFeedback] = useState<feedbackProps>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const setUser = useUserStore((state) => state.setUser);
+  const userStore = useUserStore();
+
+  const navigate = useNavigate();
 
   const handleOnChange = (e: any) => {
     const { value, name } = e.target;
@@ -31,24 +34,26 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     try {
-      setLoading(true);
-
       e?.preventDefault();
+
+      setLoading(true);
 
       const { data } = await axios.post("/users/login", formValues);
 
       const user = {
-        name: data.name,
+        name: data.user.name,
         token: data.token,
       };
 
-      setUser(user);
+      userStore.setUser(user);
 
       setFeedback({
         message: "Login realizado com sucesso",
         open: true,
         severity: "success",
       });
+
+      navigate("/home");
     } catch (error) {
       if (error instanceof AxiosError) {
         const { response } = error;

@@ -2,8 +2,8 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 interface User {
-  name: string,
-  token: string
+  name: string | null,
+  token: string | null
 }
 
 interface UserState {
@@ -14,8 +14,8 @@ interface UserState {
 
 const initialState = {
   user: {
-    name: '',
-    token: ''
+    name: null,
+    token: null
   },
 }
 
@@ -27,7 +27,7 @@ const useUserStore = create<UserState>()(
         setUser: user => set(() => ({user})),
         clearUser: () => set({...initialState}),
       }),
-      { name: 'userStore' },
+      { name: 'authUser' },
     ),
   ),
 );
