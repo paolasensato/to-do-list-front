@@ -4,6 +4,7 @@ import PrivateRoute from "../components/PrivateRoute";
 
 const LoginPage = lazy(() => import("../pages/Login"));
 const HomePage = lazy(() => import("../pages/Home"));
+const SubscribePage = lazy(() => import("../pages/Subscribe"));
 
 const MainLayout = () => {
   return (
@@ -19,6 +20,7 @@ const MainLayout = () => {
           }
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/subscribe" element={<SubscribePage />} />
       </Routes>
     </Suspense>
   );
